@@ -1,0 +1,32 @@
+@import '/src/assets/style/variables';
+@import '/src/assets/style/mixins';
+
+.list {
+  &__title {
+    font-size: 1.3rem;
+    width: 12rem;
+    text-align: center;
+  }
+
+  &__create-btn {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    border-radius: 0.8rem;
+    background-color: $neutral-n200;
+    width: 12rem;
+    align-items: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: -1rem 0 1rem 0 $shadow-color;
+      color: $primary-color;
+    }
+
+    span {
+      font-size: 1.5rem;
+    }
+  }
+}

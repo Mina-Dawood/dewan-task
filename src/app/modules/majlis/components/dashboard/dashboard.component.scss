@@ -1,0 +1,32 @@
+@import '/src/assets/style/variables';
+@import '/src/assets/style/mixins';
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 2rem;
+  padding: 2rem;
+  text-align: center;
+  height: 100%;
+
+  @include for-phone-up-tablet {
+    flex-direction: row;
+  }
+
+  &__statistic {
+    flex: 1;
+    background-color: $neutral-n200;
+    border-radius: 1rem;
+  }
+
+  &__title {
+    font-size: 2.5rem;
+    color: $white;
+    letter-spacing: 0.45rem;
+
+    @include for-phone-up-tablet {
+      display: none;
+    }
+  }
+}

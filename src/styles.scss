@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+
+
+@import "./assets/style/base";
+@import "./assets/style/mixins";
+
+html,
+body {
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+dewan-loader {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+dewan-button {
+  @include for-phone-only {
+    width: 100%;
+  }
+}

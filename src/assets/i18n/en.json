@@ -1,0 +1,12 @@
+{
+    "HOME": {
+        "GET_STARTED": "Get Started"
+    },
+    "DASHBOARD": {
+        "TITLE": "Dashboard"
+    },
+    "LIST": {
+        "TITLE": "Start New Service",
+        "CREATE_MAJLIS": "Create Majlis"
+    }
+}
