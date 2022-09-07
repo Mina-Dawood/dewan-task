@@ -1,0 +1,12 @@
+{
+  "majlis": [
+    {
+      "id": 1,
+      "name": "Abu Dhabi city majlis",
+      "cityId": 1,
+      "distinctId": 1,
+      "status": "Available",
+      "image": ""
+    }
+  ]
+}
