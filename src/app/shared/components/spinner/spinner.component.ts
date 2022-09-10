@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 export class SpinnerComponent {
   @Input() width!: number;
   @Input() height!: number;
+  @Input() isWhite!: boolean;
 }

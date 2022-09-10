@@ -69,6 +69,7 @@
                       alt="delete icon"
                       width="32"
                       height="32"
+                      (click)="selectedMajlisToDelete = majlis"
                     />
                   </div>
                 </td>
@@ -104,7 +105,7 @@
 <ng-template #loaderTemp>
   <dewan-skeleton-loader class="w-100 list__skeleton-container">
     <div class="card p-4 border-0">
-      <table class="table table-hover pt-5">
+      <table class="table pt-5">
         <ng-container *ngTemplateOutlet="tableHeaderTemp"></ng-container>
 
         <tbody>
@@ -156,3 +157,20 @@
     </tr>
   </thead>
 </ng-template>
+
+<dewan-delete-confirmation
+  *ngIf="selectedMajlisToDelete"
+  [title]="'LIST.DELETE_CONFIRMATION.TITLE' | translate"
+  [description]="
+    ('LIST.DELETE_CONFIRMATION.DESCRIPTION' | translate)?.replace(
+      '{0}',
+      selectedMajlisToDelete.name
+    )
+  "
+  [isLoading]="isDeleting"
+  (closeClick)="selectedMajlisToDelete = null"
+  (deleteClick)="deleteMajlis()"
+></dewan-delete-confirmation>
+
+<dewan-toasts aria-live="polite" aria-atomic="true"></dewan-toasts>
+

@@ -13,6 +13,11 @@
     display: inline-block;
     vertical-align: middle;
     animation: spinner 1s linear infinite;
+
+    &.is-white {
+      border-top-color: $white;
+      border-left-color: $white;
+    }
   }
 
   @keyframes spinner {
