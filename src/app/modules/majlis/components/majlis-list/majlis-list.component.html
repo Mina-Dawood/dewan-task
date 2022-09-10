@@ -15,7 +15,24 @@
 
   <div>
     <ng-container *ngIf="majlisList$ | async as majlisList; else loaderTemp">
-      {{ majlisList | json }}
+      <table>
+        <tr
+          *ngFor="
+            let majlis of majlisList
+              | slice: (page - 1) * pageSize:page * pageSize
+          "
+        >
+          <td>{{ majlis | json }}</td>
+        </tr>
+      </table>
+
+      <dewan-pagination
+        (pageChange)="page = $event"
+        [pageSize]="pageSize"
+        [totalItems]="majlisList.length + 50"
+      ></dewan-pagination>
+
+      <!-- {{ majlisList | json }} -->
     </ng-container>
 
     <!-- {{ majlisList$ | async | json }}
@@ -27,6 +44,37 @@
 </div>
 
 <ng-template #loaderTemp>
-
+  <dewan-skeleton-loader>
+    <div class="card mb-3 border w-100 rounded-12 mt-2">
+      <div
+        class="p-4 body-desktop business-info-container__description-content"
+      >
+        <div class="d-flex flex-column gap-3 py-1">
+          <ng-container
+            *ngTemplateOutlet="skeletonTemp; context: { width: '75.6%' }"
+          >
+          </ng-container>
+          <ng-container
+            *ngTemplateOutlet="skeletonTemp; context: { width: '61.6%' }"
+          >
+          </ng-container>
+          <ng-container
+            *ngTemplateOutlet="skeletonTemp; context: { width: '71%' }"
+          >
+          </ng-container>
+          <ng-container
+            *ngTemplateOutlet="skeletonTemp; context: { width: '34%' }"
+          >
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </dewan-skeleton-loader>
 </ng-template>
 
+<ng-template #skeletonTemp let-width="width">
+  <div
+    class="skeleton rounded-12 business-info-container__skeleton"
+    [style.width]="width"
+  ></div>
+</ng-template>
