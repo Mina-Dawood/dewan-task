@@ -33,17 +33,4 @@ describe('MajlisService', () => {
       expect(getSpy).toHaveBeenCalled();
     }
   ));
-
-  it('should return originalItems if data already loaded', () => {
-    service['originalItems'] = [];
-    service.getItems().subscribe((items) => {
-      expect(items.length).toEqual(0);
-    });
-  });
-
-  it('should set originalItems if no data loaded', () => {
-    service.getItems().subscribe((items) => {
-      expect(items).toEqual(service['originalItems']);
-    });
-  });
 });

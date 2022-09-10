@@ -1,11 +1,13 @@
 <ngb-pagination
   class="d-flex justify-content-center mt-4"
   (pageChange)="pageChange.emit($event)"
-  [maxSize]="pageSize"
+  [maxSize]="2"
+  [pageSize]="pageSize"
   [collectionSize]="totalItems"
   [rotate]="false"
   [boundaryLinks]="false"
-  [ellipses]="false"
-  [directionLinks]="false"
+  [ellipses]="true"
+  [directionLinks]="true"
+  size="lg"
 >
 </ngb-pagination>

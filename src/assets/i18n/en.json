@@ -7,6 +7,18 @@
     },
     "LIST": {
         "TITLE": "Start New Service",
-        "CREATE_MAJLIS": "Create Majlis"
+        "CREATE_MAJLIS": "Create Majlis",
+        "COLUMNS": {
+          "IMAGE": "Image",
+          "MAJLIS_NAME": "Majlis Name",
+          "CITY": "City",
+          "DISTRICT": "District",
+          "STATUS": "Status",
+          "FUNCTION": "Function"
+        },
+        "NO_DATA": {
+          "TITLE": "No majlis added yet",
+          "SUB_TITLE": "You will see all added majlis list here"
+        }
     }
 }

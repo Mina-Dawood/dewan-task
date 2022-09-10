@@ -3,78 +3,156 @@
     {{ "LIST.TITLE" | translate }}
   </p>
 
-  <div class="list__create-btn" (onClick)="openModal()">
-    <img
-      src="/assets/icons/add-icon.svg"
-      alt="add icon"
-      width="32"
-      height="32"
-    />
+  <div class="list__create-btn mb-5 border" (onClick)="openModal()">
+    <img src="/assets/icons/add-icon.svg" alt="add icon" />
     <span>{{ "LIST.CREATE_MAJLIS" | translate }}</span>
   </div>
 
   <div>
     <ng-container *ngIf="majlisList$ | async as majlisList; else loaderTemp">
-      <table>
-        <tr
-          *ngFor="
-            let majlis of majlisList
-              | slice: (page - 1) * pageSize:page * pageSize
-          "
-        >
-          <td>{{ majlis | json }}</td>
-        </tr>
-      </table>
+      <ng-container *ngIf="majlisList.length; else noDataTemp">
+        <div class="card p-4 border-0">
+          <table class="table table-hover pt-5">
+            <ng-container *ngTemplateOutlet="tableHeaderTemp"></ng-container>
+            <tbody>
+              <tr
+                *ngFor="
+                  let majlis of majlisList
+                    | slice: (page - 1) * pageSize:page * pageSize
+                "
+                class="pointer"
+              >
+                <td>
+                  <img
+                    [src]="majlis.image"
+                    class="m-3 rounded"
+                    width="100"
+                    height="56.25"
+                  />
+                </td>
+                <td>
+                  <span>{{ majlis.name }}</span>
+                </td>
+                <td>
+                  <span>{{ majlis.cityId | generic: getCityNameBounded }}</span>
+                </td>
+                <td>
+                  <span>{{
+                    majlis.districtId | generic: getDistrictNameBounded
+                  }}</span>
+                </td>
+                <td>
+                  <span
+                    class="d-flex align-items-center p-3 {{
+                      majlis.status | lowercase
+                    }}"
+                    [ngClass]="
+                      majlis.status === STATUS.available
+                        ? 'bg-green-g100'
+                        : 'bg-red-r100'
+                    "
+                    >{{ majlis.status }}</span
+                  >
+                </td>
+                <td>
+                  <div class="d-flex align-items-center gap-3">
+                    <img
+                      class="pointer shadow-on-hover"
+                      src="/assets/icons/edit-icon.svg"
+                      alt="edit icon"
+                      width="32"
+                      height="32"
+                    />
+                    <img
+                      class="pointer shadow-on-hover"
+                      src="/assets/icons/delete-icon.svg"
+                      alt="delete icon"
+                      width="32"
+                      height="32"
+                    />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-      <dewan-pagination
-        (pageChange)="page = $event"
-        [pageSize]="pageSize"
-        [totalItems]="majlisList.length + 50"
-      ></dewan-pagination>
-
-      <!-- {{ majlisList | json }} -->
+          <dewan-pagination
+            (pageChange)="page = $event"
+            [pageSize]="pageSize"
+            [totalItems]="majlisList.length"
+          ></dewan-pagination>
+        </div>
+      </ng-container>
     </ng-container>
-
-    <!-- {{ majlisList$ | async | json }}
-    <br>
-    {{ cities$ | async | json }}
-    <br>
-    {{ districts$ | async | json }} -->
   </div>
 </div>
 
+<ng-template #noDataTemp>
+  <div class="list__no-data w-100 text-center card border-0 py-5">
+    <p class="text-center m-0">
+      <img src="/assets/icons/no-data.svg" alt="add icon" />
+    </p>
+    <p class="list__no-data--title my-4">
+      {{ "LIST.NO_DATA.TITLE" | translate }}
+    </p>
+    <p class="list__no-data--sub-title">
+      {{ "LIST.NO_DATA.SUB_TITLE" | translate }}
+    </p>
+  </div>
+</ng-template>
+
 <ng-template #loaderTemp>
-  <dewan-skeleton-loader>
-    <div class="card mb-3 border w-100 rounded-12 mt-2">
-      <div
-        class="p-4 body-desktop business-info-container__description-content"
-      >
-        <div class="d-flex flex-column gap-3 py-1">
-          <ng-container
-            *ngTemplateOutlet="skeletonTemp; context: { width: '75.6%' }"
-          >
-          </ng-container>
-          <ng-container
-            *ngTemplateOutlet="skeletonTemp; context: { width: '61.6%' }"
-          >
-          </ng-container>
-          <ng-container
-            *ngTemplateOutlet="skeletonTemp; context: { width: '71%' }"
-          >
-          </ng-container>
-          <ng-container
-            *ngTemplateOutlet="skeletonTemp; context: { width: '34%' }"
-          >
-          </ng-container>
-        </div>
-      </div>
+  <dewan-skeleton-loader class="w-100 list__skeleton-container">
+    <div class="card p-4 border-0">
+      <table class="table table-hover pt-5">
+        <ng-container *ngTemplateOutlet="tableHeaderTemp"></ng-container>
+
+        <tbody>
+          <tr *ngFor="let el of 4 | numberToArray">
+            <td>
+              <div
+                class="m-3 rounded skeleton list__skeleton-container--img"
+              ></div>
+            </td>
+            <td *ngFor="let skeleton of 4 | numberToArray">
+              <div
+                class="rounded skeleton list__skeleton-container--skeleton"
+              ></div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center gap-3">
+                <div class="skeleton list__skeleton-container--action"></div>
+                <div class="skeleton list__skeleton-container--action"></div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </dewan-skeleton-loader>
 </ng-template>
 
-<ng-template #skeletonTemp let-width="width">
-  <div
-    class="skeleton rounded-12 business-info-container__skeleton"
-    [style.width]="width"
-  ></div>
+<ng-template #tableHeaderTemp>
+  <thead>
+    <tr>
+      <th class="py-4" scope="col">
+        {{ "LIST.COLUMNS.IMAGE" | translate }}
+      </th>
+      <th class="py-4" scope="col">
+        {{ "LIST.COLUMNS.MAJLIS_NAME" | translate }}
+      </th>
+      <th class="py-4" scope="col">
+        {{ "LIST.COLUMNS.CITY" | translate }}
+      </th>
+      <th class="py-4" scope="col">
+        {{ "LIST.COLUMNS.DISTRICT" | translate }}
+      </th>
+      <th class="py-4" scope="col">
+        {{ "LIST.COLUMNS.STATUS" | translate }}
+      </th>
+      <th class="py-4" scope="col">
+        {{ "LIST.COLUMNS.FUNCTION" | translate }}
+      </th>
+    </tr>
+  </thead>
 </ng-template>
