@@ -3,11 +3,11 @@
 .loader-container {
 
     &__loader {
-        border: 16px solid $back-color;
+        border: 1.6rem solid $back-color;
         border-radius: 50%;
-        border-top: 16px solid $primary-color;
-        width: 120px;
-        height: 120px;
+        border-top: 1.6rem solid $primary-color;
+        width: 12rem;
+        height: 12rem;
         -webkit-animation: spin 2s linear infinite; /* Safari */
         animation: spin 2s linear infinite;
       }

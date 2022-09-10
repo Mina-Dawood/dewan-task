@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/',
+  apiUrl: 'https://api.airtable.com/v0/appbh2YNBFPRGYBJg/',
 };

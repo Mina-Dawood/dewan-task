@@ -1,4 +1,5 @@
-export interface GlobalResponse<T> {
-  data: T | T[];
-  timestamp: number;
+import { ResponseItem } from '.';
+
+export interface GlobalResReq<T> {
+  records: ResponseItem<T>[];
 }

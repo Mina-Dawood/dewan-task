@@ -1,8 +1,9 @@
-import { map, Observable, of } from 'rxjs';
+import { map, Observable, of, skip, take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Majlis, GlobalResponse } from '@app/shared/interfaces';
+import { GlobalResReq, Majlis } from '@app/shared/interfaces';
 import { API_CONFIG } from '@app/shared/constants';
+import { UtilitiesService } from '..';
 
 @Injectable({
   providedIn: 'root',
@@ -12,24 +13,41 @@ export class MajlisService {
 
   constructor(private readonly http: HttpClient) {}
 
-  getItems(): Observable<Majlis[]> {
-    if (this.originalItems) {
-      return of(this.originalItems);
+  getItems(page: number = 0, isForceReload?: boolean): Observable<Majlis[]> {
+    if (this.originalItems && !isForceReload) {
+      return of(this.originalItems).pipe(take(4), skip(page * 4));
     }
-
-    const toData = (res: GlobalResponse<Majlis>) => {
-      this.originalItems = res?.data as Majlis[];
+    const toData = (res: GlobalResReq<Majlis>) => {
+      this.originalItems = res.records.map((record) =>
+        UtilitiesService.mapResponseItem(record)
+      );
       return this.originalItems;
     };
     return this.http
-      .get<GlobalResponse<Majlis>>(API_CONFIG.MAJLIS.GET_ITEMS)
-      .pipe(map(toData));
+      .get<GlobalResReq<Majlis>>(API_CONFIG.MAJLIS.GET_ITEMS)
+      .pipe(map(toData), take(4), skip(page * 4));
   }
 
-  getItemById(id: string): Observable<Majlis> {
-    const toData = (res: GlobalResponse<Majlis>) => res.data as Majlis;
+  addNewMajlis(body: Partial<Majlis>): Observable<Majlis> {
+    const payload = UtilitiesService.mapRequestItem(body);
     return this.http
-      .get<GlobalResponse<Majlis>>(`${API_CONFIG.MAJLIS.GET_ITEMS}/${id}`)
-      .pipe(map(toData));
+      .post<GlobalResReq<Majlis>>(API_CONFIG.MAJLIS.GET_ITEMS, payload)
+      .pipe(map((res) => UtilitiesService.mapResponseItem(res.records[0])));
+  }
+
+  updateMajlis(id: string, body: Partial<Majlis>): Observable<Majlis> {
+    const payload = UtilitiesService.mapRequestItem(body);
+    return this.http
+      .patch<GlobalResReq<Majlis>>(
+        `${API_CONFIG.MAJLIS.GET_ITEMS}/${id}`,
+        payload
+      )
+      .pipe(map((res) => UtilitiesService.mapResponseItem(res.records[0])));
+  }
+
+  deleteMajlis(id: string): Observable<Majlis> {
+    return this.http
+      .delete<GlobalResReq<Majlis>>(`${API_CONFIG.MAJLIS.GET_ITEMS}/${id}`)
+      .pipe(map((res) => UtilitiesService.mapResponseItem(res.records[0])));
   }
 }

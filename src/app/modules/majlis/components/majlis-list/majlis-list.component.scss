@@ -21,7 +21,7 @@
     cursor: pointer;
 
     &:hover {
-      box-shadow: -1rem 0 1rem 0 $shadow-color;
+      box-shadow: 0 0 1rem 0 $shadow-color;
       color: $primary-color;
     }
 

@@ -4,12 +4,74 @@ import { Status } from '../enums';
 
 export const ITEMS_MOCK: Majlis[] = [
   {
-    id: 1,
+    id: 'rec0L61fzbWba55wL1',
     name: 'Abu Dhabi city majlis',
     cityId: 1,
     distinctId: 1,
     status: Status.available,
-    image: '16425642989.1897643545582069',
+  },
+  {
+    id: 'rec0L61fzbWba55wL2',
+    name: 'Albateen majlis',
+    cityId: 1,
+    distinctId: 2,
+    status: Status.unavailable,
+  },
+  {
+    id: 'rec0L61fzbWba55wL3',
+    name: 'Majlis Almushrif',
+    cityId: 1,
+    distinctId: 1,
+    status: Status.available,
+  },
+  {
+    id: 'rec0L61fzbWba55wL4',
+    name: 'Al Ain Majlis',
+    cityId: 2,
+    distinctId: 1,
+    status: Status.available,
+  },
+  {
+    id: 'rec0L61fzbWba55wL5',
+    name: 'Ras Al khaima Majlis',
+    cityId: 1,
+    distinctId: 1,
+    status: Status.unavailable,
+  },
+  {
+    id: 'rec0L61fzbWba55wL6',
+    name: 'Albateen majlis',
+    cityId: 3,
+    distinctId: 2,
+    status: Status.unavailable,
+  },
+  {
+    id: 'rec0L61fzbWba55wL7',
+    name: 'Majlis Almushrif',
+    cityId: 3,
+    distinctId: 1,
+    status: Status.available,
+  },
+  {
+    id: 'rec0L61fzbWba55wL8',
+    name: 'Al Ain Majlis',
+    cityId: 1,
+    distinctId: 1,
+    status: Status.unavailable,
+  },
+  {
+    id: 'rec0L61fzbWba55wL9',
+    name: 'Abu Dhabi city majlis',
+    cityId: 1,
+    distinctId: 3,
+    status: Status.available,
+  },
+  {
+    id: 'rec0L61fzbWba55wL10',
+    name: 'Dubai Majlis',
+    cityId: 3,
+    distinctId: 1,
+    status: Status.unavailable,
   },
 ];
 
@@ -18,13 +80,5 @@ export class MajlisServiceMock {
 
   getItems(): Observable<Majlis[]> {
     return of(this.originalItems);
-  }
-
-  getItemById(id: number): Observable<Majlis> {
-    return of(
-      this.originalItems.find(
-        (majlis) => majlis.id === id
-      ) as Majlis
-    );
   }
 }

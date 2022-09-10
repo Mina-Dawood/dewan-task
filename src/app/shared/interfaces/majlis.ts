@@ -1,10 +1,10 @@
 import { Status } from "../enums";
 
 export interface Majlis {
-  id: number;
+  id: string;
   name: string;
   cityId: number;
   distinctId: number;
   status: Status;
-  image: string;
+  image?: string;
 }
