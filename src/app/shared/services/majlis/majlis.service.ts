@@ -15,7 +15,7 @@ export class MajlisService {
 
   getItems(page: number = 0, isForceReload?: boolean): Observable<Majlis[]> {
     if (this.originalItems && !isForceReload) {
-      return of(this.originalItems).pipe(take(4), skip(page * 4));
+      return of(this.originalItems);
     }
     const toData = (res: GlobalResReq<Majlis>) => {
       this.originalItems = res.records.map((record) =>
@@ -25,7 +25,7 @@ export class MajlisService {
     };
     return this.http
       .get<GlobalResReq<Majlis>>(API_CONFIG.MAJLIS.GET_ITEMS)
-      .pipe(map(toData), take(4), skip(page * 4));
+      .pipe(map(toData));
   }
 
   addNewMajlis(body: Partial<Majlis>): Observable<Majlis> {

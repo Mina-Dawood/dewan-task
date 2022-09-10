@@ -1,0 +1,20 @@
+@import "../../../../assets/style/variables";
+
+:host::ng-deep .pagination  {
+  .page-item {
+    margin: 0 0.25rem;
+    a {
+      background-color: transparent;
+      color: $neutral-n600;
+      border: 0;
+      &:focus {
+        box-shadow: none;
+      }
+    }
+    &.active a {
+      background-color: transparent;
+      color: $primary-color;
+      font-weight: 600;
+    }
+  }
+}

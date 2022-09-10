@@ -17,6 +17,9 @@ export class MajlisListComponent implements OnInit {
   cities$!: Observable<City[]>;
   districts$!: Observable<District[]>;
 
+  page: number = 1;
+  pageSize: number = 4;
+
   constructor(
     private readonly majlisService: MajlisService,
     private readonly citiesService: CitiesService,
