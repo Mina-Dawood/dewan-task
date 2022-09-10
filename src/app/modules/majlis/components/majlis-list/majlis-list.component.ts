@@ -1,12 +1,15 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Majlis, City, District } from '@app/shared/interfaces';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { finalize, Observable, Subject, takeUntil } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   CitiesService,
   DistrictsService,
   MajlisService,
+  ToastService,
 } from '@app/shared/services';
 import { Status } from '@app/shared/enums';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'dewan-majlis-list',
@@ -14,9 +17,10 @@ import { Status } from '@app/shared/enums';
   styleUrls: ['./majlis-list.component.scss'],
 })
 export class MajlisListComponent implements OnInit, OnDestroy {
-  majlisList$!: Observable<Majlis[]>;
+  majlisList$!: Observable<Majlis[]> | null;
   cities!: City[];
   districts!: District[];
+  selectedMajlisToDelete!: Majlis | null;
 
   page: number = 1;
   pageSize: number = 4;
@@ -27,11 +31,15 @@ export class MajlisListComponent implements OnInit, OnDestroy {
   STATUS = Status;
 
   private destroy$ = new Subject<void>();
+  isDeleting!: boolean;
 
   constructor(
     private readonly majlisService: MajlisService,
     private readonly citiesService: CitiesService,
-    private readonly districtsService: DistrictsService
+    private readonly districtsService: DistrictsService,
+    private readonly modal: NgbModal,
+    private readonly toastService: ToastService,
+    private readonly translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +49,25 @@ export class MajlisListComponent implements OnInit, OnDestroy {
   }
 
   openModal(): void {}
+
+  deleteMajlis(): void {
+    this.isDeleting = true;
+    this.majlisService
+      .deleteMajlis((this.selectedMajlisToDelete as Majlis).id)
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => (this.isDeleting = false))
+      )
+      .subscribe(() => {
+        this.selectedMajlisToDelete = null;
+        this.modal.dismissAll();
+        this.loadMajlisList();
+        this.toastService.show(
+          this.translateService.instant('LIST.DELETE_CONFIRMATION.SUCCESS'),
+          { classname: 'bg-success text-light' }
+        );
+      });
+  }
 
   private getCityName(cityId: number): string | undefined {
     return this.cities.find((city) => city.id === cityId)?.name;
@@ -62,6 +89,7 @@ export class MajlisListComponent implements OnInit, OnDestroy {
   }
 
   private loadMajlisList(): void {
+    this.majlisList$ = null;
     this.majlisList$ = this.majlisService.getItems();
   }
 

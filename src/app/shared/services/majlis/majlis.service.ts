@@ -13,9 +13,9 @@ export class MajlisService {
 
   getItems(): Observable<Majlis[]> {
     const toData = (res: GlobalResReq<Majlis>) => {
-      return res.records.reverse().map((record) =>
-        UtilitiesService.mapResponseItem(record, true)
-      );
+      return res.records
+        .sort((a, b) => (a.fields.id < b.fields.id ? 1 : -1))
+        .map((record) => UtilitiesService.mapResponseItem(record, true));
     };
 
     return this.http
@@ -44,11 +44,7 @@ export class MajlisService {
       );
   }
 
-  deleteMajlis(id: string): Observable<Majlis> {
-    return this.http
-      .delete<GlobalResReq<Majlis>>(`${API_CONFIG.MAJLIS.GET_ITEMS}/${id}`)
-      .pipe(
-        map((res) => UtilitiesService.mapResponseItem(res.records[0], true))
-      );
+  deleteMajlis(id: string): Observable<any> {
+    return this.http.delete<any>(`${API_CONFIG.MAJLIS.GET_ITEMS}/${id}`);
   }
 }

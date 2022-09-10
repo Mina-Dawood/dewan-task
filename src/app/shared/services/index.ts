@@ -5,3 +5,4 @@ export * from './majlis/majlis.service';
 export * from './cities/cities.service';
 export * from './districts/districts.service';
 export * from './utility/utilities.service';
+export * from './toast/toast.service';

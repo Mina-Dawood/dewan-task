@@ -1,4 +1,4 @@
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './components/loader/loader.component';
@@ -10,6 +10,8 @@ import {
   SpinnerComponent,
   PaginationComponent,
 } from './components';
+import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
+import { ToastsContainerComponent } from './components/toasts-container/toasts-container.component';
 
 const SHARED_COMPONENTS = [
   LoaderComponent,
@@ -17,9 +19,11 @@ const SHARED_COMPONENTS = [
   SpinnerComponent,
   SkeletonLoaderComponent,
   PaginationComponent,
+  DeleteConfirmationComponent,
+  ToastsContainerComponent,
 ];
 const SHARED_PIPES = [FilterPipe, GenericPipe, NumberToArrayPipe];
-const SHARED_MODULES = [TranslateModule, NgbPaginationModule];
+const SHARED_MODULES = [TranslateModule, NgbPaginationModule, NgbToastModule];
 
 @NgModule({
   declarations: [...SHARED_COMPONENTS, ...SHARED_PIPES],
