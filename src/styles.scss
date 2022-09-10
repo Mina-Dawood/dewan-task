@@ -1,7 +1,9 @@
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 @import "./assets/style/base";
+@import "./assets/style/variables";
 @import "./assets/style/mixins";
+@import "./assets/style/backgrounds";
 
 html,
 body {
@@ -20,5 +22,20 @@ dewan-button {
   @include for-phone-only {
     width: 100%;
   }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.shadow-on-hover {
+  &:hover {
+    box-shadow: 0 0 1rem 0 $shadow-color;
+    border-radius: 100%;
+  }
+}
+
+.card {
+  border-radius: 1.5rem;
 }
 

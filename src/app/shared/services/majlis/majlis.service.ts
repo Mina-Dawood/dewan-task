@@ -1,4 +1,4 @@
-import { map, Observable, of, skip, take } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GlobalResReq, Majlis } from '@app/shared/interfaces';
@@ -9,20 +9,15 @@ import { UtilitiesService } from '..';
   providedIn: 'root',
 })
 export class MajlisService {
-  private originalItems!: Majlis[];
-
   constructor(private readonly http: HttpClient) {}
 
-  getItems(page: number = 0, isForceReload?: boolean): Observable<Majlis[]> {
-    if (this.originalItems && !isForceReload) {
-      return of(this.originalItems);
-    }
+  getItems(): Observable<Majlis[]> {
     const toData = (res: GlobalResReq<Majlis>) => {
-      this.originalItems = res.records.map((record) =>
-        UtilitiesService.mapResponseItem(record)
+      return res.records.reverse().map((record) =>
+        UtilitiesService.mapResponseItem(record, true)
       );
-      return this.originalItems;
     };
+
     return this.http
       .get<GlobalResReq<Majlis>>(API_CONFIG.MAJLIS.GET_ITEMS)
       .pipe(map(toData));
@@ -32,7 +27,9 @@ export class MajlisService {
     const payload = UtilitiesService.mapRequestItem(body);
     return this.http
       .post<GlobalResReq<Majlis>>(API_CONFIG.MAJLIS.GET_ITEMS, payload)
-      .pipe(map((res) => UtilitiesService.mapResponseItem(res.records[0])));
+      .pipe(
+        map((res) => UtilitiesService.mapResponseItem(res.records[0], true))
+      );
   }
 
   updateMajlis(id: string, body: Partial<Majlis>): Observable<Majlis> {
@@ -42,12 +39,16 @@ export class MajlisService {
         `${API_CONFIG.MAJLIS.GET_ITEMS}/${id}`,
         payload
       )
-      .pipe(map((res) => UtilitiesService.mapResponseItem(res.records[0])));
+      .pipe(
+        map((res) => UtilitiesService.mapResponseItem(res.records[0], true))
+      );
   }
 
   deleteMajlis(id: string): Observable<Majlis> {
     return this.http
       .delete<GlobalResReq<Majlis>>(`${API_CONFIG.MAJLIS.GET_ITEMS}/${id}`)
-      .pipe(map((res) => UtilitiesService.mapResponseItem(res.records[0])));
+      .pipe(
+        map((res) => UtilitiesService.mapResponseItem(res.records[0], true))
+      );
   }
 }

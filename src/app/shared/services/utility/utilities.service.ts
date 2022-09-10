@@ -5,8 +5,16 @@ import { GlobalResReq, ResponseItem } from '@app/shared/interfaces';
   providedIn: 'root',
 })
 export class UtilitiesService {
-  static mapResponseItem<T>(item: ResponseItem<T>): T {
-    return { ...item.fields, id: item.id };
+  static mapResponseItem<T>(item: ResponseItem<T>, mapId?: boolean): T {
+    const imageObj: any = {};
+    if ((item.fields as any)?.image) {
+      imageObj.image = (item.fields as any)?.image[0]?.url;
+    }
+    return {
+      ...item.fields,
+      ...((mapId && { id: item.id }) || {}),
+      ...imageObj,
+    };
   }
 
   static mapRequestItem<T>(item: Partial<T>): GlobalResReq<T> {

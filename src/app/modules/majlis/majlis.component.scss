@@ -4,7 +4,6 @@
 .majlis {
   height: 100vh;
   display: flex;
-  gap: 2rem;
 
   @include for-phone-up-tablet {
     flex-direction: column;
