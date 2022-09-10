@@ -1,3 +1,5 @@
+import { Majlis } from '@app/shared/interfaces';
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MajlisService } from '@app/shared/services';
 
@@ -7,11 +9,12 @@ import { MajlisService } from '@app/shared/services';
   styleUrls: ['./majlis.component.scss']
 })
 export class MajlisComponent implements OnInit {
+  majlisList$!: Observable<Majlis[]>;
 
   constructor(private readonly majlisService: MajlisService) { }
 
   ngOnInit(): void {
-    this.majlisService.getItems().subscribe(console.log)
+    this.majlisList$ = this.majlisService.getItems();
   }
 
 }

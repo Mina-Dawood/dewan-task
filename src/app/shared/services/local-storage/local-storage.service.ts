@@ -11,7 +11,7 @@ export class LocalStorageService {
   }
 
   static setToken(token: string): void {
-    localStorage.setItem(LocalStorageKeys.token, JSON.stringify(token));
+    localStorage.setItem(LocalStorageKeys.token, token);
   }
 
   static removeToken(): void {

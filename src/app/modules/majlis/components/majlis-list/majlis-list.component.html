@@ -12,4 +12,21 @@
     />
     <span>{{ "LIST.CREATE_MAJLIS" | translate }}</span>
   </div>
+
+  <div>
+    <ng-container *ngIf="majlisList$ | async as majlisList; else loaderTemp">
+      {{ majlisList | json }}
+    </ng-container>
+
+    <!-- {{ majlisList$ | async | json }}
+    <br>
+    {{ cities$ | async | json }}
+    <br>
+    {{ districts$ | async | json }} -->
+  </div>
 </div>
+
+<ng-template #loaderTemp>
+
+</ng-template>
+
