@@ -9,7 +9,8 @@ export class FilterPipe implements PipeTransform {
     arr: Majlis[],
     key: string,
     value: string,
-    isNumber?: boolean
+    isNumber?: boolean,
+    isExact?: boolean
   ): Majlis[] {
     /** No data passed */
     if (!arr || !key || !value) {
@@ -17,7 +18,7 @@ export class FilterPipe implements PipeTransform {
     }
 
     return arr.filter((el: any) =>
-      !isNumber
+      !isNumber && !isExact
         ? el[key]?.toLowerCase().includes(value?.toLowerCase())
         : el[key] === value
     );

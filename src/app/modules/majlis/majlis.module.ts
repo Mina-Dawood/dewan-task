@@ -10,6 +10,7 @@ import { AddMajlisComponent } from './components/add-majlis/add-majlis.component
 import { StatusBarChartComponent } from './components/status-bar-chart/status-bar-chart.component';
 import { CityPieChartComponent } from './components/city-pie-chart/city-pie-chart.component';
 import { MajlisCountComponent } from './components/majlis-count/majlis-count.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,6 @@ import { MajlisCountComponent } from './components/majlis-count/majlis-count.com
     CityPieChartComponent,
     MajlisCountComponent,
   ],
-  imports: [SharedModule, MajlisRoutingModule],
+  imports: [SharedModule, MajlisRoutingModule, FormsModule],
 })
 export class MajlisModule {}
