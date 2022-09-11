@@ -1,27 +1,231 @@
-# DewanTask
+# Dewan Task
+![Dewan Logo](https://github.com/Mina-Dawood/dewan-task/blob/master/src/assets/img/dewan-logo-white?raw=true)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
+### Live <a href="https://master--dewan-task.netlify.app/" target="_blank">Demo</a>
 
-## Development server
+[![Netlify Status](https://api.netlify.com/api/v1/badges/8dba159a-bbec-4247-a8f8-c1fcbf07a068/deploy-status)](https://app.netlify.com/sites/dewan-task/deploys)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## How to run this app without Docker
 
-## Code scaffolding
+1. Open your terminal
+2. Clone this repo by run this command
+`git clone https://github.com/Mina-Dawood/dewan-task`
+3. Run `cd dewan-task`
+4. Run `npm install`
+5. Run `npm start`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## How to run this app with Docker
+
+1. Open your terminal
+2. Clone this repo by run this command
+`git clone https://github.com/Mina-Dawood/dewan-task`
+3. Run `cd dewan-task`
+4. Run `npm run build:docker`
+5. Run `npm run start:docker`
+
+## Features
+
+- Live dashboard to display majlis total number, cities' majlis pie chart and status bar chart.
+- List all majlis added with pagination functionality.
+- Add/Edit/View/Delete record of the majlis list.
+- Allow user to filter by city, district and status in majlis list.
+
+## Assumptions
+
+1. `Home Page` to enter majlis list and dashboard page (Lazy Loading Module).
+2. `Get Started` button in home page simulating user login.
+3. `Authentication Guard` is added to prevent accessing the majlis list page or any other page unless user clicked on `Get Started`, Otherwise it should be directed to home page.
+4. `JWT Interceptor` is added to intercept any request and add `Authorization & Content-Type` headers to the request.
+5. `Localization` is added for English only, but the implementation is built to serve multi languages.
+6. `Pagination` in majlis list.
+
+
+## Technology & Libraries
+
+
+- This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
+- `SCSS` as a pre-processor for CSS to give us new features not exists in the CSS.
+- `@ngx-translate` for localizing the app.
+- `Airtable` [ https://airtable.com/]( https://airtable.com/) is back-end service for CRUD operation
+- `upload` [ https://upload.io/]( https://upload.io/) is back-end service for uploading images
+- `netlify` for deployment.
+
+
+
+
+## Backend APIs
+
+
+<details>
+  <summary>API for returning all majlis list</summary>
+
+```
+curl "https://api.airtable.com/v0/appbh2YNBFPRGYBJg/majlis?maxRecords=3&view=Grid%20view" \
+  -H "Authorization: Bearer keyP8mHl0YKIjnY8T"
+  ```
+
+  </details>
+
+
+<details>
+  <summary>API for adding new majlis record</summary>
+
+```
+curl -X POST https://api.airtable.com/v0/appbh2YNBFPRGYBJg/majlis \
+  -H "Authorization: Bearer keyP8mHl0YKIjnY8T" \
+  -H "Content-Type: application/json" \
+  --data '{
+  "records": [
+    {
+      "fields": {
+        "id": 1,
+        "image": [
+          {
+            "url": "https://dl.airtable.com/.attachments/a0a50e4a6faa32d3b8166ada97a010f6/a400ed57/1.jpeg"
+          }
+        ],
+        "cityId": 1,
+        "status": "Available",
+        "districtId": 1,
+        "name": "Abu Dhabi city majlis"
+      }
+    },
+    {
+      "fields": {
+        "id": 2,
+        "image": [
+          {
+            "url": "https://dl.airtable.com/.attachments/9afb6fd7d581cd6292dd4cbfa72c523e/27620130/2.jpeg"
+          }
+        ],
+        "cityId": 2,
+        "status": "Unavailable",
+        "districtId": 2,
+        "name": "Albateen majlis"
+      }
+    }
+  ]
+}'
+  ```
+
+  </details>
+
+
+<details>
+  <summary>API for editing existing majlis record</summary>
+
+```
+curl -X PATCH https://api.airtable.com/v0/appbh2YNBFPRGYBJg/majlis \
+  -H "Authorization: Bearer keyP8mHl0YKIjnY8T" \
+  -H "Content-Type: application/json" \
+  --data '{
+  "records": [
+    {
+      "id": "rec5LevDTkLrVzu2w",
+      "fields": {
+        "id": 1,
+        "image": [
+          {
+            "id": "attDciHPSVA2XH58r"
+          }
+        ],
+        "cityId": 1,
+        "status": "Available",
+        "districtId": 1,
+        "name": "Abu Dhabi city majlis"
+      }
+    },
+    {
+      "id": "recEpyqCEFCTVzXaf",
+      "fields": {
+        "id": 2,
+        "image": [
+          {
+            "id": "attqcbkVyY88V8e6v"
+          }
+        ],
+        "cityId": 2,
+        "status": "Unavailable",
+        "districtId": 2,
+        "name": "Albateen majlis"
+      }
+    },
+    {
+      "id": "rec0L61fzbWba55wL",
+      "fields": {
+        "id": 3,
+        "image": [
+          {
+            "id": "att1kdNURk6Es9p3P"
+          }
+        ],
+        "cityId": 3,
+        "status": "Unavailable",
+        "districtId": 3,
+        "name": "Majlis Almushrif"
+      }
+    }
+  ]
+}'
+  ```
+
+  </details>
+
+
+<details>
+  <summary>API for deleting existing majlis record</summary>
+
+```
+curl -X DELETE https://api.airtable.com/v0/appbh2YNBFPRGYBJg/majlis \
+  -H "Authorization: Bearer keyP8mHl0YKIjnY8T" \
+  -G \
+  --data-urlencode 'records[]=rec5LevDTkLrVzu2w' \
+  --data-urlencode 'records[]=recEpyqCEFCTVzXaf'
+  ```
+
+  </details>
+
+
+<details>
+  <summary>API for returning all cities list</summary>
+
+```
+curl "https://api.airtable.com/v0/appbh2YNBFPRGYBJg/cities?maxRecords=3&view=Grid%20view" \
+  -H "Authorization: Bearer keyP8mHl0YKIjnY8T"
+  ```
+
+  </details>
+
+
+<details>
+  <summary>API for returning all districts list</summary>
+
+```
+curl "https://api.airtable.com/v0/appbh2YNBFPRGYBJg/districts?maxRecords=3&view=Grid%20view" \
+  -H "Authorization: Bearer keyP8mHl0YKIjnY8T"
+  ```
+
+  </details>
+
+
+<details>
+  <summary>API for uploading images</summary>
+
+```
+curl --data-binary @sample-image.jpg \
+     -H "Content-Type: image/jpeg" \
+     -H "Authorization: Bearer public_12a1xpV65mKFyHY8eyLM8gXBSkYR" \
+     -X POST "https://api.upload.io/v1/files/basic"
+  ```
+
+  </details>
+
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm run build` to build the project. The build artifacts will be stored in the `dist/dewan-task` directory.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Thank You
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
