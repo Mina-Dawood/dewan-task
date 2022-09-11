@@ -3,7 +3,7 @@
     {{ "LIST.TITLE" | translate }}
   </p>
 
-  <div class="list__create-btn mb-5 border" (onClick)="openModal()">
+  <div class="list__create-btn mb-5 border" (click)="openModal()">
     <img src="/assets/icons/add-icon.svg" alt="add icon" />
     <span>{{ "LIST.CREATE_MAJLIS" | translate }}</span>
   </div>
@@ -20,6 +20,7 @@
                   let majlis of majlisList
                     | slice: (page - 1) * pageSize:page * pageSize
                 "
+                (click)="openModal(majlis, true)"
                 class="pointer"
               >
                 <td>
@@ -62,6 +63,7 @@
                       alt="edit icon"
                       width="32"
                       height="32"
+                      (click)="$event.stopPropagation(); openModal(majlis)"
                     />
                     <img
                       class="pointer shadow-on-hover"
@@ -69,7 +71,10 @@
                       alt="delete icon"
                       width="32"
                       height="32"
-                      (click)="selectedMajlisToDelete = majlis"
+                      (click)="
+                        $event.stopPropagation();
+                        selectedMajlisToDelete = majlis
+                      "
                     />
                   </div>
                 </td>
@@ -164,7 +169,7 @@
   [description]="
     ('LIST.DELETE_CONFIRMATION.DESCRIPTION' | translate)?.replace(
       '{0}',
-      selectedMajlisToDelete.name
+      selectedMajlisToDelete?.name
     )
   "
   [isLoading]="isDeleting"
@@ -174,3 +179,11 @@
 
 <dewan-toasts aria-live="polite" aria-atomic="true"></dewan-toasts>
 
+<dewan-add-majlis
+  *ngIf="selectedMajlisToEdit || isAddNew || showDetails"
+  [majlis]="selectedMajlisToEdit"
+  [showDetails]="showDetails"
+  [cities]="cities"
+  [districts]="districts"
+  (onClose)="close($event)"
+></dewan-add-majlis>

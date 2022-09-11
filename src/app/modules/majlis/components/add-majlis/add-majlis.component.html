@@ -1,1 +1,181 @@
-<p>add-majlis works!</p>
+<ng-template #contentTemp let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">
+      {{
+        (!majlis
+          ? "MAJLIS_MODAL.ADD_NEW_MAJLIS"
+          : showDetails
+          ? "VIEW"
+          : "EDIT"
+        ) | translate
+      }}
+      {{ majlis?.name || "" }}
+    </h3>
+    <button
+      type="button"
+      class="btn-close"
+      aria-describedby="modal-title"
+      (click)="close()"
+    ></button>
+  </div>
+  <div class="modal-body py-5">
+    <form [formGroup]="form">
+      <div class="form-row row">
+        <!-- Majlis Name -->
+        <div class="col-6 mb-3">
+          <label for="name" class="mb-3">{{
+            "LIST.COLUMNS.MAJLIS_NAME" | translate
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            [formControl]="form?.get('name')"
+            [ngClass]="{
+              'is-invalid':
+                form?.get('name')?.invalid && form?.get('name')?.touched
+            }"
+            id="name"
+            [placeholder]="'LIST.COLUMNS.MAJLIS_NAME' | translate"
+            required
+          />
+        </div>
+        <!-- End Majlis Name -->
+
+        <!-- Status -->
+        <div class="col-6 mb-3">
+          <label for="name" class="mb-3">{{
+            "LIST.COLUMNS.STATUS" | translate
+          }}</label>
+
+          <div class="d-flex gap-3">
+            <div
+              class="custom-control custom-radio custom-control-inline d-flex align-items-center gap-2"
+            >
+              <input
+                name="status"
+                type="radio"
+                class="custom-control-input"
+                id="available"
+                [disabled]="showDetails"
+                [checked]="majlis?.status === STATUS.available"
+                (change)="changeStatus(STATUS.available)"
+              />
+              <label class="custom-control-label" for="available">{{
+                STATUS.available
+              }}</label>
+            </div>
+            <div
+              class="custom-control custom-radio custom-control-inline d-flex align-items-center gap-2"
+            >
+              <input
+                name="status"
+                type="radio"
+                class="custom-control-input"
+                id="unavailable"
+                [disabled]="showDetails"
+                [checked]="majlis?.status === STATUS.unavailable"
+                (change)="changeStatus(STATUS.unavailable)"
+              />
+              <label class="custom-control-label" for="unavailable">{{
+                STATUS.unavailable
+              }}</label>
+            </div>
+          </div>
+        </div>
+        <!-- End Status -->
+
+        <!-- City -->
+        <div class="col-6 mb-3">
+          <label for="name" class="mb-3">{{
+            "LIST.COLUMNS.CITY" | translate
+          }}</label>
+
+          <select
+            class="custom-select form-control"
+            [formControl]="form?.get('cityId')"
+          >
+            <option *ngFor="let city of cities" [value]="city.id">
+              {{ city.name }}
+            </option>
+          </select>
+        </div>
+        <!-- End City -->
+
+        <!-- District -->
+        <div class="col-6 mb-3">
+          <label for="name" class="mb-3">{{
+            "LIST.COLUMNS.DISTRICT" | translate
+          }}</label>
+
+          <select
+            class="custom-select form-control"
+            [formControl]="form?.get('districtId')"
+          >
+            <option
+              *ngFor="
+                let district of districts
+                  | filter
+                    : 'cityId'
+                    : (majlis ? '' : +form?.get('cityId')?.value)
+                    : true
+              "
+              [value]="district.id"
+            >
+              {{ district.name }}
+            </option>
+          </select>
+        </div>
+        <!-- End District -->
+
+        <!-- Image -->
+        <div class="col-12 mb-3">
+          <label for="name" class="mb-3">{{
+            "LIST.COLUMNS.IMAGE" | translate
+          }}</label>
+
+          <div class="custom-file">
+            <input
+              type="file"
+              [disabled]="showDetails"
+              class="custom-file-input form-control"
+              id="imageFile"
+              (change)="uploadImage($event)"
+            />
+            <img
+              *ngIf="form?.get('image')?.value"
+              [src]="form?.get('image')?.value"
+              class="m-3 rounded"
+              width="100"
+              height="56.25"
+            />
+          </div>
+        </div>
+        <!-- End Image -->
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary px-4"
+      (click)="close()"
+    >
+      {{ "CLOSE" | translate }}
+    </button>
+    <button
+      *ngIf="!showDetails"
+      type="button"
+      class="btn btn-primary px-4 d-flex align-items-center gap-2"
+      (click)="save()"
+      [disabled]="isLoading || form.invalid"
+    >
+      <dewan-spinner
+        *ngIf="isLoading"
+        [width]="1"
+        [height]="1"
+        [isWhite]="true"
+      ></dewan-spinner>
+      <span>{{ "SAVE" | translate }}</span>
+    </button>
+  </div>
+</ng-template>
