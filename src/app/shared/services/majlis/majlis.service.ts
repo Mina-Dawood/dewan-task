@@ -1,4 +1,4 @@
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GlobalResReq, Majlis } from '@app/shared/interfaces';
@@ -9,18 +9,29 @@ import { UtilitiesService } from '..';
   providedIn: 'root',
 })
 export class MajlisService {
+  private listChanged$: BehaviorSubject<Majlis[]> = new BehaviorSubject<
+    Majlis[]
+  >([]);
+
   constructor(private readonly http: HttpClient) {}
 
   getItems(): Observable<Majlis[]> {
     const toData = (res: GlobalResReq<Majlis>) => {
-      return res.records
+      const list = res.records
         .sort((a, b) => (a.fields.id < b.fields.id ? 1 : -1))
         .map((record) => UtilitiesService.mapResponseItem(record, true));
+
+      this.listChanged$.next(list);
+      return list;
     };
 
     return this.http
       .get<GlobalResReq<Majlis>>(API_CONFIG.MAJLIS.GET_ITEMS)
       .pipe(map(toData));
+  }
+
+  getListChangedSubject(): BehaviorSubject<Majlis[]> {
+    return this.listChanged$;
   }
 
   addNewMajlis(body: Partial<Majlis>): Observable<Majlis> {
