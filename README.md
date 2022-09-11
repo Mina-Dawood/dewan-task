@@ -1,5 +1,5 @@
 # Dewan Task
-![Dewan Logo](https://github.com/Mina-Dawood/dewan-task/blob/master/src/assets/img/dewan-logo-white?raw=true)
+![Dewan Logo](https://github.com/Mina-Dawood/dewan-task/blob/master/src/assets/img/dewan-logo-white.png?raw=true)
 
 ### Live <a href="https://master--dewan-task.netlify.app/" target="_blank">Demo</a>
 
