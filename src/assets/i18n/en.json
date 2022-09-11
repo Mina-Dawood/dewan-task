@@ -5,7 +5,8 @@
         "GET_STARTED": "Get Started"
     },
     "DASHBOARD": {
-        "TITLE": "Dashboard"
+        "TITLE": "Dashboard",
+        "TOTAL":  "Total number of majlis"
     },
     "LIST": {
         "TITLE": "Start New Service",

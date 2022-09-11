@@ -2,7 +2,13 @@
   <p class="dashboard__title">
     {{ "DASHBOARD.TITLE" | translate | uppercase }}
   </p>
-  <div class="dashboard__statistic"></div>
-  <div class="dashboard__statistic"></div>
-  <div class="dashboard__statistic"></div>
+  <div class="dashboard__statistic">
+    <dewan-majlis-count></dewan-majlis-count>
+  </div>
+  <div class="dashboard__statistic">
+    <dewan-city-pie-chart></dewan-city-pie-chart>
+  </div>
+  <div class="dashboard__statistic">
+    <dewan-status-bar-chart></dewan-status-bar-chart>
+  </div>
 </div>
