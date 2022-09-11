@@ -4,6 +4,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MajlisService } from '@app/shared/services';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Status } from '@app/shared/enums';
+import { Label } from 'ng2-charts';
 
 @Component({
   selector: 'dewan-status-bar-chart',
@@ -12,14 +13,16 @@ import { Status } from '@app/shared/enums';
 })
 export class StatusBarChartComponent implements OnInit, OnDestroy {
   chartData!: ChartDataSets[];
-  chartLabels = ['Available', 'Unavailable'];
+  chartLabels!: Label[];
   chartOptions!: ChartOptions;
-  destroy$ = new Subject<void>();
+
+  private destroy$ = new Subject<void>();
 
   constructor(private readonly majlisService: MajlisService) {}
 
   ngOnInit(): void {
     this.setChartDataSet();
+    this.setChartLabels();
     this.setChartOptions();
     this.majlisService
       .getListChangedSubject()
@@ -35,6 +38,10 @@ export class StatusBarChartComponent implements OnInit, OnDestroy {
 
   private getStatusCount(status: Status, list: Majlis[]): number {
     return list.filter((majlis) => majlis.status === status).length;
+  }
+
+  private setChartLabels(): void {
+    this.chartLabels = ['Available', 'Unavailable'];
   }
 
   private setChartDataSet(): void {

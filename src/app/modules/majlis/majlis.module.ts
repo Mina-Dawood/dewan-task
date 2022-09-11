@@ -9,6 +9,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MajlisListComponent } from './components/majlis-list/majlis-list.component';
 import { AddMajlisComponent } from './components/add-majlis/add-majlis.component';
 import { StatusBarChartComponent } from './components/status-bar-chart/status-bar-chart.component';
+import { CityPieChartComponent } from './components/city-pie-chart/city-pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { StatusBarChartComponent } from './components/status-bar-chart/status-ba
     MajlisListComponent,
     AddMajlisComponent,
     StatusBarChartComponent,
+    CityPieChartComponent,
   ],
   imports: [CommonModule, SharedModule, MajlisRoutingModule],
 })

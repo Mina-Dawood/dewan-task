@@ -12,11 +12,8 @@ export class CitiesService {
   constructor(private readonly http: HttpClient) {}
 
   getItems(): Observable<City[]> {
-    const toData = (res: GlobalResReq<City>) => {
-      return res.records.map((record) =>
-        UtilitiesService.mapResponseItem(record)
-      );
-    };
+    const toData = (res: GlobalResReq<City>) =>
+      res.records.map((record) => UtilitiesService.mapResponseItem(record));
 
     return this.http
       .get<GlobalResReq<City>>(API_CONFIG.CITIES.GET_ITEMS)

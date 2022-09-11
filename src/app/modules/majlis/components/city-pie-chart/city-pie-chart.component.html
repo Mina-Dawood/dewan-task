@@ -1,0 +1,14 @@
+<div class="w-100 p-4">
+  <canvas
+    baseChart
+    *ngIf="pieChartData"
+    [data]="pieChartData"
+    [labels]="pieChartLabels"
+    [chartType]="pieChartType"
+    [options]="pieChartOptions"
+    [plugins]="pieChartPlugins"
+    [legend]="pieChartLegend"
+    [colors]="pieChartColors"
+  >
+  </canvas>
+</div>
