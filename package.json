@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 5200",
-    "build": "ng build",
+    "start": "ng serve -o",
+    "build": "ng build --aot",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test --code-coverage",
+    "build:docker": "docker build -t dewan .",
+    "start:docker": "docker run -p 4200:80 dewan"
   },
   "private": true,
   "dependencies": {
