@@ -5,6 +5,8 @@
   "SAVE": "Save",
   "EDIT": "Edit",
   "VIEW": "View",
+  "FILTER": "filter",
+  "CLEAR": "clear",
   "HOME": {
     "GET_STARTED": "Get Started"
   },
@@ -25,7 +27,8 @@
     },
     "NO_DATA": {
       "TITLE": "No majlis added yet",
-      "SUB_TITLE": "You will see all added majlis list here"
+      "SUB_TITLE": "You will see all added majlis list here",
+      "NO_RESULT": "No data matching the filter"
     },
     "DELETE_CONFIRMATION": {
       "TITLE": "Majlis Deletion",

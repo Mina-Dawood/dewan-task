@@ -9,15 +9,21 @@
   </div>
 
   <div>
+    <!-- {{ cityFilter + districtFilter + statusFilter }} -->
     <ng-container *ngIf="majlisList$ | async as majlisList; else loaderTemp">
       <ng-container *ngIf="majlisList.length; else noDataTemp">
         <div class="card p-4 border-0">
           <table class="table table-hover pt-5">
-            <ng-container *ngTemplateOutlet="tableHeaderTemp"></ng-container>
+            <ng-container
+              *ngTemplateOutlet="tableHeaderTemp; context: { hasLink: true }"
+            ></ng-container>
             <tbody>
               <tr
                 *ngFor="
                   let majlis of majlisList
+                    | filter: 'cityId':+cityFilter:true
+                    | filter: 'districtId':+districtFilter:true
+                    | filter: 'status':statusFilter:false:true
                     | slice: (page - 1) * pageSize:page * pageSize
                 "
                 (click)="openModal(majlis, true)"
@@ -79,13 +85,36 @@
                   </div>
                 </td>
               </tr>
+              <tr
+                *ngIf="
+                  !(
+                    majlisList
+                    | filter: 'cityId':+cityFilter:true
+                    | filter: 'districtId':+districtFilter:true
+                    | filter: 'status':statusFilter
+                  ).length
+                "
+              >
+                <td colspan="6">
+                  <h4 class="text-center p-4">
+                    {{ "LIST.NO_DATA.NO_RESULT" | translate }}
+                  </h4>
+                </td>
+              </tr>
             </tbody>
           </table>
 
           <dewan-pagination
             (pageChange)="page = $event"
             [pageSize]="pageSize"
-            [totalItems]="majlisList.length"
+            [totalItems]="
+              (
+                majlisList
+                | filter: 'cityId':+cityFilter:true
+                | filter: 'districtId':+districtFilter:true
+                | filter: 'status':statusFilter
+              ).length
+            "
           ></dewan-pagination>
         </div>
       </ng-container>
@@ -138,7 +167,7 @@
   </dewan-skeleton-loader>
 </ng-template>
 
-<ng-template #tableHeaderTemp>
+<ng-template #tableHeaderTemp let-hasLink="hasLink">
   <thead>
     <tr>
       <th class="py-4" scope="col">
@@ -149,12 +178,74 @@
       </th>
       <th class="py-4" scope="col">
         {{ "LIST.COLUMNS.CITY" | translate }}
+        <a
+          class="ms-3"
+          *ngIf="hasLink"
+          (click)="cityFilter = cityFilter === null ? '' : null"
+          >{{ (cityFilter === null ? "FILTER" : "CLEAR") | translate }}</a
+        >
+        <ng-container *ngIf="hasLink">
+          <br />
+          <select
+            *ngIf="cityFilter !== null"
+            class="custom-select form-control w-50 mt-3"
+            [(ngModel)]="cityFilter"
+          >
+            <option *ngFor="let city of cities" [value]="city.id">
+              {{ city.name }}
+            </option>
+          </select>
+        </ng-container>
       </th>
       <th class="py-4" scope="col">
         {{ "LIST.COLUMNS.DISTRICT" | translate }}
+        <a
+          class="ms-3"
+          *ngIf="hasLink"
+          (click)="districtFilter = districtFilter === null ? '' : null"
+          >{{ (districtFilter === null ? "FILTER" : "CLEAR") | translate }}</a
+        >
+        <ng-container *ngIf="hasLink">
+          <br />
+          <select
+            *ngIf="districtFilter !== null"
+            class="custom-select form-control w-50 mt-3"
+            [(ngModel)]="districtFilter"
+          >
+            <option
+              *ngFor="
+                let district of districts | filter: 'cityId':+cityFilter:true
+              "
+              [value]="district.id"
+            >
+              {{ district.name }}
+            </option>
+          </select>
+        </ng-container>
       </th>
       <th class="py-4" scope="col">
         {{ "LIST.COLUMNS.STATUS" | translate }}
+        <a
+          class="ms-3"
+          *ngIf="hasLink"
+          (click)="statusFilter = statusFilter === null ? '' : null"
+          >{{ (statusFilter === null ? "FILTER" : "CLEAR") | translate }}</a
+        >
+        <ng-container *ngIf="hasLink">
+          <br />
+          <select
+            *ngIf="statusFilter !== null"
+            class="custom-select form-control w-50 mt-3"
+            [(ngModel)]="statusFilter"
+          >
+            <option
+              *ngFor="let status of STATUS | keyvalue"
+              [value]="status.value"
+            >
+              {{ status.value }}
+            </option>
+          </select>
+        </ng-container>
       </th>
       <th class="py-4" scope="col">
         {{ "LIST.COLUMNS.FUNCTION" | translate }}

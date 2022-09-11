@@ -49,6 +49,17 @@
     }
   }
 
+  th {
+    vertical-align: initial;
+    width: 18%;
+
+    a {
+      color: $link-color;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
   &__skeleton-container {
     &--img {
       width: 10rem;

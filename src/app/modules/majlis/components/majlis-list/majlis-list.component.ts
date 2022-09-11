@@ -34,6 +34,10 @@ export class MajlisListComponent implements OnInit, OnDestroy {
 
   STATUS = Status;
 
+  cityFilter: string | null = null;
+  districtFilter: string | null = null;
+  statusFilter: string | null = null;
+
   private destroy$ = new Subject<void>();
   isDeleting!: boolean;
 
