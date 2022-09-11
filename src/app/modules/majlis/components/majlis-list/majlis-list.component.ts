@@ -28,6 +28,10 @@ export class MajlisListComponent implements OnInit, OnDestroy {
   getCityNameBounded!: Function;
   getDistrictNameBounded!: Function;
 
+  selectedMajlisToEdit!: Majlis | undefined;
+  isAddNew!: boolean;
+  showDetails!: boolean;
+
   STATUS = Status;
 
   private destroy$ = new Subject<void>();
@@ -48,7 +52,26 @@ export class MajlisListComponent implements OnInit, OnDestroy {
     this.loadDistrictsList();
   }
 
-  openModal(): void {}
+  openModal(majlis?: Majlis, details?: boolean): void {
+    this.selectedMajlisToEdit = majlis;
+    this.isAddNew = !majlis;
+    this.showDetails = details || false;
+  }
+
+  close(isRefresh?: boolean): void {
+    this.selectedMajlisToEdit = undefined;
+    this.isAddNew = false;
+    this.showDetails = false;
+
+    if (isRefresh) {
+      this.loadMajlisList();
+    }
+  }
+
+  loadMajlisList(): void {
+    this.majlisList$ = null;
+    this.majlisList$ = this.majlisService.getItems();
+  }
 
   deleteMajlis(): void {
     this.isDeleting = true;
@@ -86,11 +109,6 @@ export class MajlisListComponent implements OnInit, OnDestroy {
     if (this.cities && this.districts) {
       this.loadMajlisList();
     }
-  }
-
-  private loadMajlisList(): void {
-    this.majlisList$ = null;
-    this.majlisList$ = this.majlisService.getItems();
   }
 
   private loadCitiesList(): void {

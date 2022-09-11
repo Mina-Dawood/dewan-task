@@ -17,11 +17,22 @@ export class UtilitiesService {
     };
   }
 
-  static mapRequestItem<T>(item: Partial<T>): GlobalResReq<T> {
+  static mapRequestItem<T>(item: Partial<T>, id?: string): GlobalResReq<T> {
     return {
       records: [
         {
-          fields: item as T,
+          ...((id && { id }) || {}),
+          fields: {
+            ...(item as T),
+            ...(((item as any).image && {
+              image: [
+                {
+                  url: (item as any).image,
+                },
+              ],
+            }) ||
+              {}),
+          },
         },
       ],
     };

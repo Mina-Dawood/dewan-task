@@ -1,6 +1,5 @@
 import { SharedModule } from '@app/shared/shared.module';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { MajlisRoutingModule } from './majlis-routing.module';
 import { MajlisComponent } from './majlis.component';
@@ -23,6 +22,6 @@ import { MajlisCountComponent } from './components/majlis-count/majlis-count.com
     CityPieChartComponent,
     MajlisCountComponent,
   ],
-  imports: [CommonModule, SharedModule, MajlisRoutingModule],
+  imports: [SharedModule, MajlisRoutingModule],
 })
 export class MajlisModule {}

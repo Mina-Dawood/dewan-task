@@ -2,7 +2,7 @@
 @import '/src/assets/style/mixins';
 
 .majlis {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
 
   @include for-phone-up-tablet {

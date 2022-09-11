@@ -73,7 +73,7 @@ export class CityPieChartComponent implements OnInit, OnDestroy {
           'yellow',
           'green',
           'white',
-          'cyan',
+          'orange',
           'aqua',
         ],
       },

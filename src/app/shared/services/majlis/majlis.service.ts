@@ -44,12 +44,9 @@ export class MajlisService {
   }
 
   updateMajlis(id: string, body: Partial<Majlis>): Observable<Majlis> {
-    const payload = UtilitiesService.mapRequestItem(body);
+    const payload = UtilitiesService.mapRequestItem(body, id);
     return this.http
-      .patch<GlobalResReq<Majlis>>(
-        `${API_CONFIG.MAJLIS.GET_ITEMS}/${id}`,
-        payload
-      )
+      .patch<GlobalResReq<Majlis>>(API_CONFIG.MAJLIS.GET_ITEMS, payload)
       .pipe(
         map((res) => UtilitiesService.mapResponseItem(res.records[0], true))
       );

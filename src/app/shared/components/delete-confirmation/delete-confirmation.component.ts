@@ -26,7 +26,10 @@ export class DeleteConfirmationComponent {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.modal.open(this.contentTemp, { keyboard: false });
+      this.modal.open(this.contentTemp, {
+        keyboard: false,
+        backdrop: 'static',
+      });
     }, 0);
   }
 
