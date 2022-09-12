@@ -61,7 +61,7 @@
 
 ```
 curl "https://api.airtable.com/v0/appbh2YNBFPRGYBJg/majlis?maxRecords=3&view=Grid%20view" \
-  -H "Authorization: Bearer api_key"
+  -H "Authorization: Bearer auth_token"
   ```
 
   </details>
