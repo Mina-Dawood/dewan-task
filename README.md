@@ -61,7 +61,7 @@
 
 ```
 curl "https://api.airtable.com/v0/appbh2YNBFPRGYBJg/majlis?maxRecords=3&view=Grid%20view" \
-  -H "Authorization: Bearer keyP8mHl0YKIjnY8T"
+  -H "Authorization: Bearer auth_token"
   ```
 
   </details>
@@ -72,7 +72,7 @@ curl "https://api.airtable.com/v0/appbh2YNBFPRGYBJg/majlis?maxRecords=3&view=Gri
 
 ```
 curl -X POST https://api.airtable.com/v0/appbh2YNBFPRGYBJg/majlis \
-  -H "Authorization: Bearer keyP8mHl0YKIjnY8T" \
+  -H "Authorization: Bearer auth_token" \
   -H "Content-Type: application/json" \
   --data '{
   "records": [
@@ -116,7 +116,7 @@ curl -X POST https://api.airtable.com/v0/appbh2YNBFPRGYBJg/majlis \
 
 ```
 curl -X PATCH https://api.airtable.com/v0/appbh2YNBFPRGYBJg/majlis \
-  -H "Authorization: Bearer keyP8mHl0YKIjnY8T" \
+  -H "Authorization: Bearer auth_token" \
   -H "Content-Type: application/json" \
   --data '{
   "records": [
@@ -177,7 +177,7 @@ curl -X PATCH https://api.airtable.com/v0/appbh2YNBFPRGYBJg/majlis \
 
 ```
 curl -X DELETE https://api.airtable.com/v0/appbh2YNBFPRGYBJg/majlis \
-  -H "Authorization: Bearer keyP8mHl0YKIjnY8T" \
+  -H "Authorization: Bearer auth_token" \
   -G \
   --data-urlencode 'records[]=rec5LevDTkLrVzu2w' \
   --data-urlencode 'records[]=recEpyqCEFCTVzXaf'
@@ -191,7 +191,7 @@ curl -X DELETE https://api.airtable.com/v0/appbh2YNBFPRGYBJg/majlis \
 
 ```
 curl "https://api.airtable.com/v0/appbh2YNBFPRGYBJg/cities?maxRecords=3&view=Grid%20view" \
-  -H "Authorization: Bearer keyP8mHl0YKIjnY8T"
+  -H "Authorization: Bearer auth_token"
   ```
 
   </details>
@@ -202,7 +202,7 @@ curl "https://api.airtable.com/v0/appbh2YNBFPRGYBJg/cities?maxRecords=3&view=Gri
 
 ```
 curl "https://api.airtable.com/v0/appbh2YNBFPRGYBJg/districts?maxRecords=3&view=Grid%20view" \
-  -H "Authorization: Bearer keyP8mHl0YKIjnY8T"
+  -H "Authorization: Bearer auth_token"
   ```
 
   </details>
@@ -214,7 +214,7 @@ curl "https://api.airtable.com/v0/appbh2YNBFPRGYBJg/districts?maxRecords=3&view=
 ```
 curl --data-binary @sample-image.jpg \
      -H "Content-Type: image/jpeg" \
-     -H "Authorization: Bearer public_12a1xpV65mKFyHY8eyLM8gXBSkYR" \
+     -H "Authorization: Bearer public_key" \
      -X POST "https://api.upload.io/v1/files/basic"
   ```
 
