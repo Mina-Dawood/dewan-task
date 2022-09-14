@@ -1,0 +1,43 @@
+{
+  "CANCEL": "Cancel",
+  "DELETE": "Delete",
+  "CLOSE": "Close",
+  "SAVE": "Save",
+  "EDIT": "Edit",
+  "VIEW": "View",
+  "FILTER": "filter",
+  "CLEAR": "clear",
+  "HOME": {
+    "GET_STARTED": "Get Started"
+  },
+  "DASHBOARD": {
+    "TITLE": "Dashboard",
+    "TOTAL": "Total number of majlis"
+  },
+  "LIST": {
+    "TITLE": "Start New Service",
+    "CREATE_MAJLIS": "Create Majlis",
+    "COLUMNS": {
+      "IMAGE": "Image",
+      "MAJLIS_NAME": "Majlis Name",
+      "CITY": "City",
+      "DISTRICT": "District",
+      "STATUS": "Status",
+      "FUNCTION": "Function"
+    },
+    "NO_DATA": {
+      "TITLE": "No majlis added yet",
+      "SUB_TITLE": "You will see all added majlis list here",
+      "NO_RESULT": "No data matching the filter"
+    },
+    "DELETE_CONFIRMATION": {
+      "TITLE": "Majlis Deletion",
+      "DESCRIPTION": "Are you sure you want to delete {0} majlis?",
+      "SUCCESS": "Deleted successfully!"
+    }
+  },
+  "MAJLIS_MODAL": {
+    "ADD_NEW_MAJLIS": "Add new majlis",
+    "SUCCESS": "Majlis record saved successfully!"
+  }
+}
